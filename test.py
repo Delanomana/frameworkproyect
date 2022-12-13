@@ -1,11 +1,11 @@
+#fastapi 
 from fastapi import FastAPI, Request 
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates 
-from fastapi import FastAPI, Request 
-
+#database
 from database import Users
 from database import database as connection
-
+#schema
 from schemas import UserRequestModel
 from schemas import UserResponseModel
 
@@ -28,9 +28,10 @@ def shutdown():
     if not connection.is_closed():
         connection.close()
 
-@app.get("/")
-async def index():
-    return 'Hola pagina web'
+@app.get('/index/',response_class= HTMLResponse"/")
+async def index(request : Request):
+    context = {'request':request}
+    return templates.TemplatesResponse("index.html", context)
 
 @app.post("/users")
 async def create_user(user_request: UserRequestModel):
