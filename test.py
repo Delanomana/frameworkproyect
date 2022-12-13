@@ -1,4 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request 
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates 
+from fastapi import FastAPI, Request 
 
 from database import Users
 from database import database as connection
@@ -9,6 +12,9 @@ from schemas import UserResponseModel
 app = FastAPI(title='Proyecto framework FLP',
             description='Testing web page',
             version='1.0.1')
+
+templates = Jinja2Templates(directory="templates")
+
 
 @app.on_event('startup')
 def starup():
